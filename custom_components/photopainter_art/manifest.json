@@ -1,10 +1,10 @@
 {
   "domain": "photopainter_art",
   "name": "PhotopainterArt",
-  "codeowners": ["@aitjcize"],
+  "codeowners": ["@cnrowley"],
   "config_flow": true,
   "dependencies": ["http"],
-  "documentation": "https://github.com/aitjcize/esp32-photoframe",
+  "documentation": "https://github.com/cnrowley/ha-photopainter-ui",
   "integration_type": "device",
   "iot_class": "local_polling",
   "requirements": ["aiohttp>=3.8.0"],
