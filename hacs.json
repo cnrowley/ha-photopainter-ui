@@ -1,0 +1,9 @@
+{
+  "name": "PhotoPainter-Art UI",
+  "content_in_root": false,
+  "render_readme": true,
+  "homeassistant": "2023.0.0",
+  "domains": ["lovelace"],
+  "iot_class": "local_polling"
+}
+

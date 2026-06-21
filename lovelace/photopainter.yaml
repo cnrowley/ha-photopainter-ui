@@ -1,0 +1,16 @@
+title: PhotoPainter
+views:
+  - title: Main
+    path: photopainter
+    cards:
+
+      - type: custom:button-card
+        name: Run PhotoPainter
+        icon: mdi:play
+        tap_action:
+          action: call-service
+          service: script.run_my_app
+
+      - type: entity
+        entity: sensor.my_app_value
+        name: Latest Output
