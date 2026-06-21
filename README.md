@@ -9,3 +9,4 @@ Custom Home Assistant UI for PhotoPainter pipeline.
 ## Requirements
 - button-card (HACS)
 
+# ha-photopainter-ui
