@@ -1,0 +1,12 @@
+{
+  "domain": "photopainter_art",
+  "name": "PhotopainterArt",
+  "codeowners": ["@aitjcize"],
+  "config_flow": true,
+  "dependencies": ["http"],
+  "documentation": "https://github.com/aitjcize/esp32-photoframe",
+  "integration_type": "device",
+  "iot_class": "local_polling",
+  "requirements": ["aiohttp>=3.8.0"],
+  "version": "3.0.0"
+}

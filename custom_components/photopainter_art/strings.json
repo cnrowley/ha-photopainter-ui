@@ -1,0 +1,128 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up PhotopainterArt",
+        "description": "Enter the connection details for your PhotoPainter device.\n\n💡 Tip: If the device appears offline and is battery-powered, press the BOOT button to wake it up.",
+        "data": {
+          "host": "PhotoFrame IP or hostname",
+          "ha_url": "Home Assistant URL"
+        },
+        "data_description": {
+          "host": "The IP address or hostname of your PhotoPainter device",
+          "ha_url": "The URL where Home Assistant can be accessed, used by the PhotoFrame to fetch images"
+        }
+      },
+      "confirm": {
+        "title": "Confirm PhotoFrame Setup",
+        "description": "Device name: **{device_name}**\n\nClick Submit to add this PhotoFrame to Home Assistant."
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to PhotoFrame. Please check the IP address/hostname and ensure the device is powered on.\n\n💡 If battery-powered: Press the BOOT button to wake up the device.",
+      "duplicate_device_name": "A PhotoFrame with this device name is already configured. Please change the device name on the PhotoFrame (via web interface or config) and try again.",
+      "unknown": "Unexpected error occurred"
+    },
+    "abort": {
+      "already_configured": "This PhotoPainter device is already configured"
+    }
+  },
+  "services": {
+    "rotate": {
+      "name": "Rotate Image",
+      "description": "Manually trigger the device's own internal image rotation (same as pressing the KEY button)."
+    },
+    "display_image": {
+      "name": "Display Image",
+      "description": "Display an image from a camera or image entity (legacy direct push).",
+      "fields": {
+        "entity_id": {
+          "name": "Entity",
+          "description": "Camera or image entity to display."
+        }
+      }
+    },
+    "generate_art": {
+      "name": "Generate & Display",
+      "description": "Produce the next image from a generator, camera, or URL and display it.",
+      "fields": {
+        "image_source": {
+          "name": "Image source",
+          "description": "Where the image comes from: generative, camera, or url."
+        },
+        "camera_entity_id": {
+          "name": "Camera/image entity",
+          "description": "Camera or image entity to push."
+        },
+        "image_url": {
+          "name": "Image URL",
+          "description": "Direct image URL to fetch and push."
+        },
+        "art_type": {
+          "name": "Art type",
+          "description": "Which generator to use: dla, mandelbrot, or goban."
+        },
+        "dla_frame": {
+          "name": "DLA – Frame number",
+          "description": "Which frame in the DLA sequence to render (1–120)."
+        },
+        "mb_fg": {
+          "name": "Mandelbrot – Foreground colour",
+          "description": "Colour used for the fractal detail."
+        },
+        "mb_bg": {
+          "name": "Mandelbrot – Background colour",
+          "description": "Colour used for the background."
+        },
+        "mb_mode": {
+          "name": "Mandelbrot – Mode",
+          "description": "Single frame or advancing zoom sequence."
+        },
+        "goban_source": {
+          "name": "Goban – SGF source",
+          "description": "Where to get the SGF from: library, url, or inline text."
+        },
+        "goban_library_id": {
+          "name": "Goban – Library game",
+          "description": "Id of a bundled public-domain SGF game."
+        },
+        "goban_url": {
+          "name": "Goban – SGF download URL",
+          "description": "Direct URL to an .sgf file to download and render."
+        },
+        "goban_sgf_text": {
+          "name": "Goban – SGF text",
+          "description": "Raw SGF game record to render directly."
+        },
+        "goban_move": {
+          "name": "Goban – Move number",
+          "description": "Move number to display. 0 shows the final position."
+        },
+        "goban_bg": {
+          "name": "Goban – Background colour",
+          "description": "Colour outside the board."
+        },
+        "goban_board": {
+          "name": "Goban – Board colour",
+          "description": "Colour of the board surface."
+        },
+        "goban_white_color": {
+          "name": "Goban – White stone colour",
+          "description": "Colour used to render White's stones."
+        },
+        "goban_black_color": {
+          "name": "Goban – Black stone colour",
+          "description": "Colour used to render Black's stones."
+        },
+        "goban_grid_thickness": {
+          "name": "Goban – Grid thickness",
+          "description": "Line weight for the board grid (1 or 2)."
+        },
+        "goban_highlight": {
+          "name": "Goban – Last-move highlight",
+          "description": "Marker style for the most recent move."
+        }
+      }
+    }
+  }
+}

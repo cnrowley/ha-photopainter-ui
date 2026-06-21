@@ -1,0 +1,289 @@
+rotate:
+  name: Rotate Image
+  description: Manually trigger image rotation (same as pressing the KEY button on the device)
+
+display_image:
+  name: Display Image
+  description: Display an image from a camera or image entity on the PhotoFrame
+  fields:
+    entity_id:
+      name: Entity
+      description: Camera or image entity to display
+      required: true
+      example: "camera.front_door"
+      selector:
+        entity:
+          domain:
+            - camera
+            - image
+
+generate_art:
+  name: Generate & Display
+  description: >-
+    Produce the next image — from a generator, a camera/image entity, or a
+    direct URL — and display it on the PhotoPainter. Mirrors exactly what
+    the "Generate & display" button does, so this can be called from
+    automations (e.g. a nightly trigger that cycles through art types).
+  fields:
+    image_source:
+      name: Image source
+      description: >-
+        Primary picker: where the image comes from. "generative" runs one
+        of the bundled generators (see art_type below); "camera" pushes a
+        frame from an HA camera/image entity; "url" fetches a direct image
+        URL.
+      required: false
+      default: "generative"
+      example: "generative"
+      selector:
+        select:
+          options:
+            - generative
+            - camera
+            - url
+
+    camera_entity_id:
+      name: Camera/image entity
+      description: >-
+        Camera or image entity to push (used when image_source is "camera").
+      required: false
+      default: ""
+      example: "camera.front_door"
+      selector:
+        entity:
+          domain:
+            - camera
+            - image
+
+    image_url:
+      name: Image URL
+      description: >-
+        Direct image URL to fetch and push (used when image_source is "url").
+      required: false
+      default: ""
+      example: "https://example.com/today.jpg"
+      selector:
+        text:
+
+    art_type:
+      name: Art type
+      description: >-
+        Which generator to use (only relevant when image_source is
+        "generative"): dla, mandelbrot, or goban.
+      required: false
+      default: "dla"
+      example: "dla"
+      selector:
+        select:
+          options:
+            - dla
+            - mandelbrot
+            - goban
+
+    # ── DLA ──────────────────────────────────────────────────────────────────
+    # dla.x is stateful and directory-based.  The only parameter exposed here
+    # is which frame in the 1–120 sequence to render.  Frame 1 automatically
+    # triggers --init to start a fresh sequence.
+    dla_frame:
+      name: DLA – Frame number
+      description: >-
+        Which frame in the DLA sequence to render (1 – 120).
+        Frame 1 resets the sequence (runs --init) before rendering.
+        Use the "DLA reset sequence" button or pass frame=1 to restart.
+      required: false
+      default: 1
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 120
+          step: 1
+          mode: box
+
+    # ── Mandelbrot ────────────────────────────────────────────────────────────
+    mb_fg:
+      name: Mandelbrot – Foreground colour
+      description: Colour used for the fractal detail
+      required: false
+      default: "white"
+      example: "white"
+      selector:
+        select:
+          options:
+            - black
+            - white
+            - green
+            - blue
+            - red
+            - yellow
+            - orange
+
+    mb_bg:
+      name: Mandelbrot – Background colour
+      description: Colour used for the background
+      required: false
+      default: "black"
+      example: "black"
+      selector:
+        select:
+          options:
+            - black
+            - white
+            - green
+            - blue
+            - red
+            - yellow
+            - orange
+
+    mb_mode:
+      name: Mandelbrot – Mode
+      description: >-
+        "single" renders one frame at the current zoom position.
+        "zoom_sequence" advances one step in a persistent zoom sequence
+        each time Generate is called.
+      required: false
+      default: "single"
+      example: "single"
+      selector:
+        select:
+          options:
+            - single
+            - zoom_sequence
+
+    # ── Goban ─────────────────────────────────────────────────────────────────
+    goban_source:
+      name: Goban – SGF source
+      description: >-
+        Where to get the SGF game record from: a bundled library game,
+        a download URL, or pasted SGF text.
+      required: false
+      default: "library"
+      example: "library"
+      selector:
+        select:
+          options:
+            - library
+            - url
+            - inline
+
+    goban_library_id:
+      name: Goban – Library game
+      description: >-
+        Id of a bundled public-domain SGF game (used when goban_source is
+        "library"). Leave empty to use the first bundled game.
+      required: false
+      default: ""
+      example: "shusaku_ear_reddening"
+      selector:
+        text:
+
+    goban_url:
+      name: Goban – SGF download URL
+      description: >-
+        Direct URL to an .sgf file to download and render (used when
+        goban_source is "url").
+      required: false
+      default: ""
+      example: "https://online-go.com/api/v1/games/12345678/sgf"
+      selector:
+        text:
+
+    goban_sgf_text:
+      name: Goban – SGF text
+      description: >-
+        Raw SGF game record to render directly (used when goban_source is
+        "inline").
+      required: false
+      default: ""
+      example: "(;GM[1]SZ[19];B[pd];W[dp];B[pq];W[dd])"
+      selector:
+        text:
+          multiline: true
+
+    goban_move:
+      name: Goban – Move number
+      description: Move number to display (0 = final position in the SGF)
+      required: false
+      default: 0
+      example: 0
+      selector:
+        number:
+          min: 0
+          max: 700
+          step: 1
+          mode: box
+
+    goban_bg:
+      name: Goban – Background colour
+      description: Colour outside the board
+      required: false
+      default: "white"
+      example: "white"
+      selector:
+        select:
+          options:
+            - white
+            - black
+
+    goban_board:
+      name: Goban – Board colour
+      description: Colour of the board surface
+      required: false
+      default: "yellow"
+      example: "yellow"
+      selector:
+        select:
+          options:
+            - yellow
+            - white
+
+    goban_white_color:
+      name: Goban – White stone colour
+      description: Colour used to render White's stones
+      required: false
+      default: "green"
+      example: "green"
+      selector:
+        select:
+          options:
+            - white
+            - green
+            - blue
+            - red
+
+    goban_black_color:
+      name: Goban – Black stone colour
+      description: Colour used to render Black's stones
+      required: false
+      default: "black"
+      example: "black"
+      selector:
+        select:
+          options:
+            - black
+            - red
+
+    goban_grid_thickness:
+      name: Goban – Grid thickness
+      description: Line weight for the board grid
+      required: false
+      default: 1
+      example: 1
+      selector:
+        select:
+          options:
+            - "1"
+            - "2"
+
+    goban_highlight:
+      name: Goban – Last-move highlight
+      description: Marker style used to indicate the most recent move
+      required: false
+      default: "ring"
+      example: "ring"
+      selector:
+        select:
+          options:
+            - dot
+            - ring
+            - none
